@@ -85,7 +85,7 @@ const App = () => {
                 image: "",
                 message: ""
             },
-            readStatus: false
+            readStatus: true
         },
         {
             id: 7,
