@@ -3,6 +3,9 @@ export default {
     content: ["./index.html", "./src/**/*.{js,jsx}"],
     theme: {
         extend: {
+            fontFamily: {
+                jakarta: "'Plus Jakarta Sans', sans-serif"
+            },
             colors: {
                 red: "hsl(1, 90%, 64%)",
                 blue: "hsl(219, 85%, 26%)",

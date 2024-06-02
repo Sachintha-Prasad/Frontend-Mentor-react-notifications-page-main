@@ -1,13 +1,13 @@
-import React from "react"
+import React, { useState } from "react"
 
 const App = () => {
-    const notificationList = [
+    const [notificationList, setNotificationList] = useState([
         {
             id: 1,
-            name: "Mark webber",
+            name: "Mark Webber",
             time: "1m",
             image: "../src/assets/images/avatar-mark-webber.webp",
-            notificationTitle: "react to your recent post",
+            notificationTitle: "reacted to your recent post",
             attachments: {
                 postName: "My first tournament today!",
                 groupName: "",
@@ -32,7 +32,7 @@ const App = () => {
         },
         {
             id: 3,
-            name: "Jecob Thompson",
+            name: "Jacob Thompson",
             time: "1 day",
             image: "../src/assets/images/avatar-jacob-thompson.webp",
             notificationTitle: "has joined your group",
@@ -55,7 +55,7 @@ const App = () => {
                 groupName: "",
                 image: "",
                 message:
-                    "Hello, thanks for setting up the Chess Club. I've been a member for a few weeks now and i'm already having lots of fun and improving my game."
+                    "Hello, thanks for setting up the Chess Club. I've been a member for a few weeks now and I'm already having lots of fun and improving my game."
             },
             readStatus: false
         },
@@ -64,7 +64,7 @@ const App = () => {
             name: "Kimberly Smith",
             time: "1 week",
             image: "../src/assets/images/avatar-kimberly-smith.webp",
-            notificationTitle: "commentd on your picture",
+            notificationTitle: "commented on your picture",
             attachments: {
                 postName: "",
                 groupName: "",
@@ -74,7 +74,7 @@ const App = () => {
             readStatus: false
         },
         {
-            id: 7,
+            id: 6,
             name: "Nathan Peterson",
             time: "2 weeks",
             image: "../src/assets/images/avatar-nathan-peterson.webp",
@@ -85,10 +85,10 @@ const App = () => {
                 image: "",
                 message: ""
             },
-            readStatus: false
+            readStatus: true
         },
         {
-            id: 8,
+            id: 7,
             name: "Anna Kim",
             time: "2 weeks",
             image: "../src/assets/images/avatar-anna-kim.webp",
@@ -99,36 +99,98 @@ const App = () => {
                 image: "",
                 message: ""
             },
-            readStatus: false
+            readStatus: true
         }
-    ]
+    ])
+
+    const markAllAsRead = () => {
+        const updatedList = notificationList.map((notification) => ({
+            ...notification,
+            readStatus: true
+        }))
+        setNotificationList(updatedList)
+    }
+
+    const handleNotificationClick = (id) => {
+        const updatedList = notificationList.map((notification) => {
+            if (notification.id === id) {
+                return { ...notification, readStatus: true }
+            }
+            return notification
+        })
+        setNotificationList(updatedList)
+    }
+
+    const unreadCount = notificationList.filter(
+        (notification) => !notification.readStatus
+    ).length
 
     return (
-        <div className="bg-very-light-grayish-blue h-screen p-1">
+        <div className="bg-very-light-grayish-blue font-jakarta h-screen p-1">
             <div className="container max-w-6xl px-8 py-6 bg-white md:mt-16 md:shadow-lg">
-                <header className="">
-                    <div>
+                <header className="flex items-center justify-between mb-8">
+                    <div className="flex gap-2">
                         <h1 className="text-xl font-bold text-blue">
                             Notification
                         </h1>
-                        <p>3</p>
+                        <p className="px-2.5 py-0.5 bg-blue font-bold text-white rounded-md">
+                            {unreadCount}
+                        </p>
                     </div>
-                    <button>Mark all as read</button>
+                    <button onClick={markAllAsRead}>Mark all as read</button>
                 </header>
-                <div className="notification-list-container">
+                <div className="notification-list-container flex flex-col gap-3">
                     {notificationList.map((item) => (
-                        <div key={item.id} className="flex gap-6">
-                            <img src={item.image} alt="" />
-                            <div>
-                                <p>
-                                    {item.name}{" "}
-                                    <span>{item.notificationTitle}</span>
-                                    <span>{item.attachments.postName}</span>
-                                    <span>{item.attachments.groupName}</span>
-                                </p>
-                                <div>{item.time} ago</div>
+                        <div
+                            key={item.id}
+                            className={`flex gap-4 justify-between p-4 rounded-md ${
+                                !item.readStatus && "bg-light-grayish-blue-1"
+                            }`}
+                            onClick={() => handleNotificationClick(item.id)}
+                        >
+                            <div className="flex gap-4 flex-col sm:flex-row items-start ">
+                                <img
+                                    src={item.image}
+                                    alt=""
+                                    className="w-full max-w-12 max-h-12"
+                                />
+                                <div>
+                                    <p>
+                                        <span className="text-lg text-very-dark-blue font-bold mr-2">
+                                            {item.name}
+                                        </span>
+                                        <span className="text-dark-grayish-blue mr-2">
+                                            {item.notificationTitle}
+                                        </span>
+                                        {item.attachments.postName && (
+                                            <span className="text-lg text-dark-grayish-blue font-bold">
+                                                {item.attachments.postName}
+                                            </span>
+                                        )}
+                                        {item.attachments.groupName && (
+                                            <span className="text-lg text-blue font-bold">
+                                                {item.attachments.groupName}
+                                            </span>
+                                        )}
+                                        {!item.readStatus && (
+                                            <span className="w-2 h-2 rounded-full bg-red inline-block ml-2"></span>
+                                        )}
+                                    </p>
+                                    <div>{item.time} ago</div>
+                                    {item.attachments.message && (
+                                        <p className="p-4 border-b-[1px]">
+                                            {item.attachments.message}
+                                        </p>
+                                    )}
+                                </div>
                             </div>
-                            <img src={item.attachments.image} alt="" />
+                            {item.attachments.image && (
+                                <img
+                                    src={item.attachments.image}
+                                    alt=""
+                                    className="w-full max-w-12 max-h-12"
+                                />
+                            )}
                         </div>
                     ))}
                 </div>
