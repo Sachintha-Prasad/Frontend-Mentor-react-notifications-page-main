@@ -2,3 +2,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .transition-def {
+        @apply cursor-pointer transition-all duration-200 ease-linear;
+    }
+}

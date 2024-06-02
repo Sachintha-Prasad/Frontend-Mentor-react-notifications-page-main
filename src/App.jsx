@@ -6,7 +6,7 @@ const App = () => {
             id: 1,
             name: "Mark Webber",
             time: "1m",
-            image: "../src/assets/images/avatar-mark-webber.webp",
+            image: "/images/avatar-mark-webber.webp",
             notificationTitle: "reacted to your recent post",
             attachments: {
                 postName: "My first tournament today!",
@@ -20,7 +20,7 @@ const App = () => {
             id: 2,
             name: "Angela Gray",
             time: "5m",
-            image: "../src/assets/images/avatar-angela-gray.webp",
+            image: "/images/avatar-angela-gray.webp",
             notificationTitle: "followed you",
             attachments: {
                 postName: "",
@@ -34,7 +34,7 @@ const App = () => {
             id: 3,
             name: "Jacob Thompson",
             time: "1 day",
-            image: "../src/assets/images/avatar-jacob-thompson.webp",
+            image: "/images/avatar-jacob-thompson.webp",
             notificationTitle: "has joined your group",
             attachments: {
                 postName: "",
@@ -48,7 +48,7 @@ const App = () => {
             id: 4,
             name: "Rizky Hasanuddin",
             time: "5 days",
-            image: "../src/assets/images/avatar-rizky-hasanuddin.webp",
+            image: "/images/avatar-rizky-hasanuddin.webp",
             notificationTitle: "sent you a private message",
             attachments: {
                 postName: "",
@@ -63,12 +63,12 @@ const App = () => {
             id: 5,
             name: "Kimberly Smith",
             time: "1 week",
-            image: "../src/assets/images/avatar-kimberly-smith.webp",
+            image: "/images/avatar-kimberly-smith.webp",
             notificationTitle: "commented on your picture",
             attachments: {
                 postName: "",
                 groupName: "",
-                image: "../src/assets/images/image-chess.webp",
+                image: "/images/image-chess.webp",
                 message: ""
             },
             readStatus: false
@@ -77,7 +77,7 @@ const App = () => {
             id: 6,
             name: "Nathan Peterson",
             time: "2 weeks",
-            image: "../src/assets/images/avatar-nathan-peterson.webp",
+            image: "/images/avatar-nathan-peterson.webp",
             notificationTitle: "reacted to your recent post",
             attachments: {
                 postName: "5 end-game strategies to increase your win rate",
@@ -85,13 +85,13 @@ const App = () => {
                 image: "",
                 message: ""
             },
-            readStatus: true
+            readStatus: false
         },
         {
             id: 7,
             name: "Anna Kim",
             time: "2 weeks",
-            image: "../src/assets/images/avatar-anna-kim.webp",
+            image: "/images/avatar-anna-kim.webp",
             notificationTitle: "left the group",
             attachments: {
                 postName: "",
@@ -99,7 +99,7 @@ const App = () => {
                 image: "",
                 message: ""
             },
-            readStatus: true
+            readStatus: false
         }
     ])
 
@@ -127,7 +127,7 @@ const App = () => {
 
     return (
         <div className="bg-very-light-grayish-blue font-jakarta h-screen p-1">
-            <div className="container max-w-6xl px-8 py-6 bg-white md:mt-16 md:shadow-lg">
+            <div className="container max-w-6xl px-8 py-6 bg-white rounded-xl xl:my-8 xl:shadow-lg">
                 <header className="flex items-center justify-between mb-8">
                     <div className="flex gap-2">
                         <h1 className="text-xl font-bold text-blue">
@@ -137,13 +137,18 @@ const App = () => {
                             {unreadCount}
                         </p>
                     </div>
-                    <button onClick={markAllAsRead}>Mark all as read</button>
+                    <button
+                        onClick={markAllAsRead}
+                        className="text-dark-grayish-blue hover:text-blue transition-def"
+                    >
+                        Mark all as read
+                    </button>
                 </header>
                 <div className="notification-list-container flex flex-col gap-3">
                     {notificationList.map((item) => (
                         <div
                             key={item.id}
-                            className={`flex gap-4 justify-between p-4 rounded-md ${
+                            className={`flex gap-4 justify-between p-4 rounded-md transition-def ${
                                 !item.readStatus && "bg-light-grayish-blue-1"
                             }`}
                             onClick={() => handleNotificationClick(item.id)}
@@ -156,19 +161,19 @@ const App = () => {
                                 />
                                 <div>
                                     <p>
-                                        <span className="text-lg text-very-dark-blue font-bold mr-2">
+                                        <span className="text-lg text-very-dark-blue font-bold mr-2 hover:text-blue transition-def">
                                             {item.name}
                                         </span>
                                         <span className="text-dark-grayish-blue mr-2">
                                             {item.notificationTitle}
                                         </span>
                                         {item.attachments.postName && (
-                                            <span className="text-lg text-dark-grayish-blue font-bold">
+                                            <span className="text-lg text-dark-grayish-blue font-bold hover:text-blue transition-def">
                                                 {item.attachments.postName}
                                             </span>
                                         )}
                                         {item.attachments.groupName && (
-                                            <span className="text-lg text-blue font-bold">
+                                            <span className="text-lg text-blue font-bold cursor-pointer">
                                                 {item.attachments.groupName}
                                             </span>
                                         )}
@@ -178,7 +183,7 @@ const App = () => {
                                     </p>
                                     <div>{item.time} ago</div>
                                     {item.attachments.message && (
-                                        <p className="p-4 border-b-[1px]">
+                                        <p className="p-4 mt-3 rounded-md border-[1px] border-light-grayish-blue-2 text-dark-grayish-blue font-medium hover:bg-light-grayish-blue-2 hover:border-transparent transition-def">
                                             {item.attachments.message}
                                         </p>
                                     )}
